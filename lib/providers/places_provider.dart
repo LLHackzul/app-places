@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import './places.dart';
+import '../models/place.dart';
 import 'dart:convert';
 
 class Places with ChangeNotifier {
   List<Place> _placesList = [
     Place(
       id: "L1",
-      title: "Tikal",
+      title: "Petén",
       description: "Civilizacion maya, en su máxima expresion",
       img:
           'https://firebasestorage.googleapis.com/v0/b/example-89004.appspot.com/o/Tikal.jpeg?alt=media&token=f1680d67-0698-4ff7-bf1c-0550f8f764c0',

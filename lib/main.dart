@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './screens/tabs_screen.dart';
 import './providers/places_provider.dart';
-
+import './screens/place_detail_screen.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -27,6 +27,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
+          appBarTheme: AppBarTheme(color: Colors.white, iconTheme: IconThemeData(color: Colors.black87)),
           primarySwatch: Colors.pink,
           canvasColor: const Color.fromRGBO(255, 254, 229, 1),
           scaffoldBackgroundColor: Colors.white,
@@ -40,6 +41,7 @@ class _MyAppState extends State<MyApp> {
         initialRoute: '/',
         routes: {
           '/': (ctx) => TabsScreen(),
+          PlaceDetailScreen.routeName: (ctx)=>PlaceDetailScreen(),
         },
       ),
     );

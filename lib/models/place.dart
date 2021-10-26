@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Place with ChangeNotifier {
+class Place {
   final String id;
   final String title;
   final String description;

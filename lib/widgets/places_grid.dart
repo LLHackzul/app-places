@@ -6,20 +6,17 @@ import '../providers/places_provider.dart';
 class PlacesGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final placesData = Provider.of<Places>(context);
-    print(placesData.places.length);
-    return GridView.builder(
-      padding: const EdgeInsets.all(10),
+    return Consumer<Places>
+      (child: Center(child: Text('No hay lugares, inténtalo más tarde')),
+      builder: (ctx, greatPlaces, ch)=> greatPlaces.places.length <=0 ? ch as Widget : GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 3 / 4,
         mainAxisSpacing: 20,
       ),
-      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-        value: placesData.places[i],
-        child: PlacesItem(),
-      ),
-      itemCount: placesData.places.length,
+      itemBuilder: (ctx, i) => PlacesItem(greatPlaces.places[i]),
+      itemCount:  greatPlaces.places.length ,
+      )
     );
   }
 }

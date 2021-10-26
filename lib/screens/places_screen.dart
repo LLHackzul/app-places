@@ -33,38 +33,44 @@ class HeaderWidget extends StatelessWidget {
             'Buscar y explorar',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
           ),
-          Row(
-            children: [
-              const Icon(
-                Icons.search,
-                size: 30,
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              Expanded(
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Buscar lugares ',
-                  ),
-                  textInputAction: TextInputAction.next,
-                  onSaved: (value) {},
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Porfavor ingrese un valor';
-                    }
-                    return null;
-                  },
+          Card(
+            margin: const EdgeInsets.symmetric(vertical: 5),
+            elevation: 8,
+            color: Colors.grey.shade200,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            child: Row(
+              children: [
+                const SizedBox(
+                  width: 8,
                 ),
-              ),
-            ],
+                const Icon(
+                  Icons.search,
+                  size: 30,
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      hintText: 'Buscar lugares...',
+                      border: InputBorder.none,
+                    ),
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           const Text(
             'Departamentos',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+          ),
+          Divider(
+            color: Colors.black87,
           ),
         ],
       ),
