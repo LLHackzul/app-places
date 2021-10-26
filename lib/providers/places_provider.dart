@@ -16,7 +16,7 @@ class Places with ChangeNotifier {
       title: "Atitlán",
       description: "El lago más hermoso del mundo",
       img:
-          'https://firebasestorage.googleapis.com/v0/b/example-89004.appspot.com/o/Atitlan.jpeg?alt=media&token=05ee0413-d7c4-4c9a-ab8d-815c614cd61b',
+          'https://firebasestorage.googleapis.com/v0/b/example-89004.appspot.com/o/Lago%20Atitlan2.jpg?alt=media&token=b8d35b9b-a0e4-48ec-9ce2-476a6716de1e',
     ),
     Place(
       id: "L3",
@@ -30,7 +30,7 @@ class Places with ChangeNotifier {
       title: "Xela",
       description: "La cuna de la cultura y de los mejores ingenieros",
       img:
-          'https://firebasestorage.googleapis.com/v0/b/example-89004.appspot.com/o/Xela.jpeg?alt=media&token=d1f27db5-e395-454f-97c3-6501b2f44bb1',
+          'https://firebasestorage.googleapis.com/v0/b/example-89004.appspot.com/o/Xela.jpg?alt=media&token=a66e2d90-7d54-414b-a22e-fd54426decc9',
     ),
   ];
 

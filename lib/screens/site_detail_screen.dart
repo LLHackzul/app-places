@@ -1,8 +1,7 @@
-import '../widgets/site_item.dart';
 import 'package:flutter/material.dart';
 
-class PlaceDetailScreen extends StatelessWidget {
-  static const routeName = '/place-detail-screen';
+class SiteDetailScreen extends StatelessWidget {
+  static const routeName = '/site-detail-screen';
 
   @override
   Widget build(BuildContext context) {
@@ -16,28 +15,15 @@ class PlaceDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Peten',
+                'Parque Nacional de Tikal',
                 style: TextStyle(
                     color: Colors.black87,
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold),
-              ),
-              Text(
-                'La casa del gran jaguar',
-                style: TextStyle(
-                    color: Colors.grey,
                     fontSize: 25,
                     fontWeight: FontWeight.bold),
               ),
               Divider(
                 color: Colors.black87,
               ),
-              Expanded(
-                child: ListView.builder(
-                  itemBuilder: (ctx, i) => SiteItem(),
-                  itemCount: 5,
-                ),
-              )
             ],
           ),
         ));

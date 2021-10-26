@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import './screens/tabs_screen.dart';
 import './providers/places_provider.dart';
 import './screens/place_detail_screen.dart';
+import './screens/site_detail_screen.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -42,6 +43,7 @@ class _MyAppState extends State<MyApp> {
         routes: {
           '/': (ctx) => TabsScreen(),
           PlaceDetailScreen.routeName: (ctx)=>PlaceDetailScreen(),
+          SiteDetailScreen.routeName: (ctx)=> SiteDetailScreen(),
         },
       ),
     );
