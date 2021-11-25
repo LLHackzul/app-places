@@ -1,7 +1,30 @@
 import 'package:flutter/material.dart';
 import '../widgets/places_grid.dart';
+import 'package:provider/provider.dart';
+import '../providers/places_provider.dart';
 
-class PlacesScreen extends StatelessWidget {
+class PlacesScreen extends StatefulWidget {
+  @override
+  State<PlacesScreen> createState() => _PlacesScreenState();
+}
+
+class _PlacesScreenState extends State<PlacesScreen> {
+  var _isInit = true;
+  var _isLoading = false;
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Places>(context).fetchAndSetPlaces().then((_) {
+        _isLoading = false;
+      });
+      _isInit = false;
+    }
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,7 +32,12 @@ class PlacesScreen extends StatelessWidget {
         child: Column(
           children: [
             HeaderWidget(),
-            Expanded(child: PlacesGrid()),
+            Expanded(
+                child: _isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : PlacesGrid()),
           ],
         ),
       ),
@@ -37,7 +65,8 @@ class HeaderWidget extends StatelessWidget {
             margin: const EdgeInsets.symmetric(vertical: 5),
             elevation: 8,
             color: Colors.grey.shade200,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             child: Row(
               children: [
                 const SizedBox(
