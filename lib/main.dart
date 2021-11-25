@@ -4,6 +4,7 @@ import './screens/tabs_screen.dart';
 import './providers/places_provider.dart';
 import './screens/place_detail_screen.dart';
 import './screens/site_detail_screen.dart';
+import './providers/auth.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -20,6 +21,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => Auth(),
+        ),
         ChangeNotifierProvider(
           create: (ctx) => Places(),
         ),

@@ -2,7 +2,6 @@ import '../screens/places_screen.dart';
 import '../screens/outstanding_screen.dart';
 import '../screens/profile_screen.dart';
 import 'package:flutter/material.dart';
-
 class TabsScreen extends StatefulWidget {
   @override
   _TabsScreenState createState() => _TabsScreenState();
