@@ -20,7 +20,7 @@ class Places with ChangeNotifier {
     ),
     Place(
       id: "L3",
-      title: "Semuc",
+      title: "Alta Verapaz",
       description: "Un paraíso natual en medio del bosque",
       img:
           'https://firebasestorage.googleapis.com/v0/b/example-89004.appspot.com/o/Semuc.jpeg?alt=media&token=0d1cec8b-7992-4e20-9bdc-c07f3ee244b1',
