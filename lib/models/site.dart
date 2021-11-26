@@ -14,18 +14,17 @@ class Site {
   final String title;
   final String description;
   final String history;
-  final String? phone; 
-  final String? email;
   final SiteLocation? location;
-  final List<String>? imageArray;
+  final String image;
+
+  final String placeId;
 
   Site(
       {required this.id,
       required this.title,
       required this.description,
       required this.history,
-      this.phone,
-      this.email,
-      this.location,
-      this.imageArray});
+      required this.image,
+      required this.placeId,
+      this.location});
 }
