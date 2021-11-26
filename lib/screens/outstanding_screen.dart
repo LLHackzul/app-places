@@ -11,7 +11,7 @@ class OutstandingPlacesScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Destacado',
+                'Te podría interesar',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
               Container(

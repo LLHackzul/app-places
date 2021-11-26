@@ -11,7 +11,7 @@ class PlacesItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.of(context).pushNamed(PlaceDetailScreen.routeName);
+        Navigator.of(context).pushNamed(PlaceDetailScreen.routeName, arguments: place.id);
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -22,33 +22,38 @@ class PlacesItem extends StatelessWidget {
               Container(
                 width: 300,
                 height: 300,
+                
                 child: FadeInImage(
                   placeholder: AssetImage('assets/img/placeholder.png'),
                   image: NetworkImage(place.img),
                   fit: BoxFit.cover,
                 ),
               ),
-              Padding(
+              Container(
+                decoration: BoxDecoration(color: Colors.black38),
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      place.title,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 40,
-                          backgroundColor: Colors.black54),
-                    ),
+                    FittedBox(
+                        child: Text(
+                          place.title,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                              ),
+                        ),
+                      ),
                     Text(
                       place.description,
                       style: const TextStyle(
-                          color: Colors.white,
+                          color: Colors.cyanAccent,
                           fontSize: 13,
                           decorationColor: Colors.black,
                           fontWeight: FontWeight.bold,
-                          backgroundColor: Colors.black54),
+                         ),
                     )
                   ],
                 ),

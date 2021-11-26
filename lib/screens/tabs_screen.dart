@@ -15,7 +15,7 @@ class _TabsScreenState extends State<TabsScreen> {
   void initState() {
     _pages = [
       {'page': PlacesScreen(), 'title': 'Inicio'},
-      {'page': OutstandingPlacesScreen(), 'title': 'Destacados'},
+      {'page': OutstandingPlacesScreen(), 'title': 'Recomendado'},
       {'page': ProfileScreen(), 'title': 'Perfil'},
     ];
     super.initState();
@@ -46,8 +46,8 @@ class _TabsScreenState extends State<TabsScreen> {
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
-            icon: Icon(Icons.star),
-            title: Text('Destacados'),
+            icon: Icon(Icons.recommend),
+            title: Text('Recomendado'),
           ),
           BottomNavigationBarItem(
             backgroundColor: Colors.white,
@@ -59,3 +59,4 @@ class _TabsScreenState extends State<TabsScreen> {
     );
   }
 }
+

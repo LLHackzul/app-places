@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './screens/tabs_screen.dart';
@@ -5,6 +6,7 @@ import './providers/places_provider.dart';
 import './screens/place_detail_screen.dart';
 import './screens/site_detail_screen.dart';
 import './providers/auth.dart';
+
 import './providers/sites_provider.dart';
 
 void main() {
@@ -32,6 +34,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (ctx) => Sites(),
         ),
+        
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

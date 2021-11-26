@@ -1,11 +1,22 @@
 import '../widgets/site_item.dart';
 import 'package:flutter/material.dart';
-
-class PlaceDetailScreen extends StatelessWidget {
+import 'package:provider/provider.dart';
+import '../providers/places_provider.dart';
+import '../providers/sites_provider.dart';
+class PlaceDetailScreen extends StatefulWidget {
   static const routeName = '/place-detail-screen';
 
   @override
+  State<PlaceDetailScreen> createState() => _PlaceDetailScreenState();
+}
+
+class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
+  @override
   Widget build(BuildContext context) {
+    final placeId = ModalRoute.of(context)!.settings.arguments as String;
+    final loadedPlace =
+        Provider.of<Places>(context, listen: false).findById(placeId);
+    final loadedSites= Provider.of<Sites>(context).sitesByPlace(placeId);
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -15,15 +26,17 @@ class PlaceDetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+          
+                  Text(
+                    loadedPlace.title,
+                    style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold),
+                  ),
+                 
               Text(
-                'Peten',
-                style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold),
-              ),
-              Text(
-                'La casa del gran jaguar',
+                loadedPlace.description,
                 style: TextStyle(
                     color: Colors.grey,
                     fontSize: 25,
@@ -32,10 +45,10 @@ class PlaceDetailScreen extends StatelessWidget {
               Divider(
                 color: Colors.black87,
               ),
-              Expanded(
+               Expanded(
                 child: ListView.builder(
-                  itemBuilder: (ctx, i) => SiteItem(),
-                  itemCount: 5,
+                  itemBuilder: (ctx, i) => SiteItem(site: loadedSites[i],),
+                  itemCount: loadedSites.length,
                 ),
               )
             ],

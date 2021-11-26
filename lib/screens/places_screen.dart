@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/places_grid.dart';
 import 'package:provider/provider.dart';
 import '../providers/places_provider.dart';
+import '../providers/sites_provider.dart';
 
 class PlacesScreen extends StatefulWidget {
   @override
@@ -17,7 +18,8 @@ class _PlacesScreenState extends State<PlacesScreen> {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<Places>(context).fetchAndSetPlaces().then((_) {
+      Provider.of<Places>(context).fetchAndSetPlaces();
+      Provider.of<Sites>(context).fetchAndSetSites().then((_) {
         _isLoading = false;
       });
       _isInit = false;
@@ -37,7 +39,7 @@ class _PlacesScreenState extends State<PlacesScreen> {
                     ? Center(
                         child: CircularProgressIndicator(),
                       )
-                    : PlacesGrid()),
+                    : PlacesGrid())
           ],
         ),
       ),
@@ -57,11 +59,7 @@ class HeaderWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Buscar y explorar',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-          ),
-          Card(
+          /*  Card(
             margin: const EdgeInsets.symmetric(vertical: 5),
             elevation: 8,
             color: Colors.grey.shade200,
@@ -90,13 +88,27 @@ class HeaderWidget extends StatelessWidget {
                 ),
               ],
             ),
-          ),
+          ), */
           const SizedBox(
             height: 10,
           ),
-          const Text(
-            'Departamentos',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Image.asset(
+                'assets/img/QuetzalLogo.png',
+                fit: BoxFit.cover,
+                height: 50,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              const Text(
+                'Departamentos',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+              ),
+              
+            ],
           ),
           Divider(
             color: Colors.black87,

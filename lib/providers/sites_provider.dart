@@ -4,17 +4,23 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class Sites with ChangeNotifier {
-  List<Site> _items = [];
+  List<Site> _items = [
+
+  ];
 
   List<Site> get items {
     return [..._items];
   }
 
-  Site findById(String id) {
-    return _items.firstWhere((item) => item.id == id);
+  List<Site> sitesByPlace(String id) {
+    return _items.where((item) => item.placeId == id).toList();
   }
 
-  /* Future<void> fetchAndSetPlaces() async {
+  int sitesLength (String id) {
+    return sitesByPlace(id).length;
+  }
+
+  Future<void> fetchAndSetSites() async {
     final url = Uri.parse(
         'https://example-89004-default-rtdb.firebaseio.com/sites.json');
     try {
@@ -30,7 +36,7 @@ class Sites with ChangeNotifier {
           title: siteData['title'],
           description: siteData['description'],
           history: siteData['history'],
-          location: siteData['location'],
+          location: null,
           image: siteData['image'],
           placeId: siteData['placeId'],
         ));
@@ -41,7 +47,7 @@ class Sites with ChangeNotifier {
       print(e);
       throw e;
     }
-  } */
+  }
 
   Future<void> addSite(Site site) async {
     final url = Uri.parse(

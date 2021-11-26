@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../screens/site_detail_screen.dart';
+import '../models/site.dart';
 class SiteItem extends StatelessWidget {
-  const SiteItem({Key? key}) : super(key: key);
+  final Site site;
+  const SiteItem({Key? key,required this.site}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +28,7 @@ class SiteItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                   child: FadeInImage(
                     placeholder: AssetImage('assets/img/placeholder.png'),
-                    image: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/example-89004.appspot.com/o/San%20Felipe.jpg?alt=media&token=90a9e95e-1b8b-4185-a2e2-cff28eced01c'),
+                    image: NetworkImage(site.image),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -43,7 +44,7 @@ class SiteItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        'Yaxha',
+                        site.title,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -68,7 +69,7 @@ class SiteItem extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Tour completo por yaxha, no te lo puedes perder!',
+                        site.description,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
