@@ -1,70 +1,136 @@
+import 'package:app_places/providers/site.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/sites_provider.dart';
+import './maps_screen.dart';
+import '../helpers/locations_helper.dart';
+import '../providers/auth.dart';
 
-class SiteDetailScreen extends StatelessWidget {
+class SiteDetailScreen extends StatefulWidget {
   static const routeName = '/site-detail-screen';
 
   @override
+  State<SiteDetailScreen> createState() => _SiteDetailScreenState();
+}
+
+class _SiteDetailScreenState extends State<SiteDetailScreen> {
+  @override
   Widget build(BuildContext context) {
+    final siteId = ModalRoute.of(context)!.settings.arguments as String;
+    final site = Provider.of<Sites>(context).findById(siteId);
+    final authData = Provider.of<Auth>(context);
+    final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
+      lattitude: site.location!.lattitude,
+      longitude: site.location!.longitude,
+    );
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Parque Nacional de Tikal',
-                style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold),
-              ),
-              Divider(
-                color: Colors.black87,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: FadeInImage(
-                      placeholder: AssetImage('assets/img/placeholder.png'),
-                      image: NetworkImage(
-                          'https://firebasestorage.googleapis.com/v0/b/example-89004.appspot.com/o/San%20Felipe.jpg?alt=media&token=90a9e95e-1b8b-4185-a2e2-cff28eced01c'),
-                      fit: BoxFit.cover,
-                      width: 150,
-                      height: 240,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FittedBox(
+                      child: Text(
+                        site.title,
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    if (authData.isAuth)
+                      IconButton(
+                        icon: Icon(site.isFavorite
+                            ? Icons.favorite
+                            : Icons.favorite_border),
+                        onPressed: () {
+                          site.toggleFavoriteStatus(authData.userId);
+                          setState(() {
+                            
+                          });
+                        },
+                      ),
+
+                  ],
+                ),
+                Divider(
+                  color: Colors.black87,
+                ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: FadeInImage(
+                    placeholder: AssetImage('assets/img/placeholder.png'),
+                    image: NetworkImage(site.image),
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: 240,
+                  ),
+                ),
+                Divider(
+                  color: Colors.black87,
+                ),
+                Container(
+                  child: SingleChildScrollView(
+                    child: Text(
+                      site.history,
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                      textAlign: TextAlign.justify,
                     ),
                   ),
-                  SizedBox(width: 5),
-                  Expanded(
-                      child: Container(
-                          height: 250,
-                          child: SingleChildScrollView(
-                              child: Text(
-                            "La antigua ciudad Maya de Tikal es una de las mayores riquezas culturales, naturales y de valor universal de Guatemala. El parque fue declarado como el primer sitio Patrimonio Mundial Cultural y Natural de la humanidad en 1979 por la UNESCO. encuentra situada en el municipio de Flores, departamento de Petén. Este asentamiento prehispánico es el más extenso del país, se dice que llego a tener 100,000 habitantes durante su época de mayor esplendor.",
-                            style: TextStyle(color: Colors.grey,),
-                            textAlign: TextAlign.justify,
-                          )))),
-                ],
-              ),
-               Text(
-                'Actividades',
-                style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold),
-              ),
-               Text(
-                'Localización',
-                style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
+                ),
+                Text(
+                  'Localización',
+                  style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.grey)),
+                  height: 170,
+                  width: double.infinity,
+                  child: staticMapImageUrl == null
+                      ? Text(
+                          'Error al cargar',
+                          textAlign: TextAlign.center,
+                        )
+                      : Image.network(
+                          staticMapImageUrl,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        ),
+                ),
+                Text(
+                  site.location!.address as String,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20, color: Colors.grey),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          fullscreenDialog: true,
+                          builder: (ctx) => MapScreen(
+                                initialLocation: site.location as SiteLocation,
+                                isSelecting: false,
+                              )));
+                    },
+                    child: Text('Ver en el mapa')),
+              ],
+            ),
           ),
         ));
   }

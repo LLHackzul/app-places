@@ -30,6 +30,7 @@ class PlacesItem extends StatelessWidget {
                 ),
               ),
               Container(
+                width: 300,
                 decoration: BoxDecoration(color: Colors.black38),
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 child: Column(

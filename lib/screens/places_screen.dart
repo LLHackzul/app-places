@@ -59,36 +59,6 @@ class HeaderWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /*  Card(
-            margin: const EdgeInsets.symmetric(vertical: 5),
-            elevation: 8,
-            color: Colors.grey.shade200,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 8,
-                ),
-                const Icon(
-                  Icons.search,
-                  size: 30,
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      hintText: 'Buscar lugares...',
-                      border: InputBorder.none,
-                    ),
-                    textInputAction: TextInputAction.next,
-                  ),
-                ),
-              ],
-            ),
-          ), */
           const SizedBox(
             height: 10,
           ),
@@ -107,7 +77,6 @@ class HeaderWidget extends StatelessWidget {
                 'Departamentos',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
               ),
-              
             ],
           ),
           Divider(

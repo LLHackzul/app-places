@@ -1,27 +1,42 @@
+import 'package:app_places/helpers/locations_helper.dart';
 import 'package:flutter/material.dart';
-import '../models/site.dart';
+import './site.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class Sites with ChangeNotifier {
-  List<Site> _items = [
+  List<Site> _items = [];
+  final String userId;
 
-  ];
-
+  Sites(this._items, this.userId);
   List<Site> get items {
     return [..._items];
+  }
+
+  Future<List<Site>> get randomList async{
+    List<Site> randomList= _items;
+    randomList.shuffle();
+    return randomList;
   }
 
   List<Site> sitesByPlace(String id) {
     return _items.where((item) => item.placeId == id).toList();
   }
 
-  int sitesLength (String id) {
+  Site findById(String id) {
+    return _items.firstWhere((site) => site.id == id);
+  }
+
+  int sitesLength(String id) {
     return sitesByPlace(id).length;
   }
 
+   List<Site> get favoriteItems {
+    return _items.where((item) => item.isFavorite).toList();
+  }
+
   Future<void> fetchAndSetSites() async {
-    final url = Uri.parse(
+    var url = Uri.parse(
         'https://example-89004-default-rtdb.firebaseio.com/sites.json');
     try {
       final response = await http.get(url);
@@ -29,6 +44,12 @@ class Sites with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
+
+      url = Uri.parse(
+          'https://example-89004-default-rtdb.firebaseio.com/userFavorites/$userId.json');
+      final favoriteResponse = await http.get(url);
+      final favoriteData = json.decode(favoriteResponse.body);
+
       final List<Site> loadedSites = [];
       extractedData.forEach((siteId, siteData) {
         loadedSites.add(Site(
@@ -36,9 +57,15 @@ class Sites with ChangeNotifier {
           title: siteData['title'],
           description: siteData['description'],
           history: siteData['history'],
-          location: null,
+          location: SiteLocation(
+            lattitude: siteData['loc_lat'],
+            longitude: siteData['loc_lng'],
+            address: siteData['adress'] as String,
+          ),
           image: siteData['image'],
           placeId: siteData['placeId'],
+          isFavorite:
+              favoriteData == null ? false : favoriteData[siteId] ?? false,
         ));
       });
       _items = loadedSites;
@@ -79,5 +106,29 @@ class Sites with ChangeNotifier {
       print(e);
       throw e;
     }
+  }
+
+  Future<void> updateSite(
+      String id, Site newSite, SiteLocation pickedLocation) async {
+    final siteIndex = _items.indexWhere((site) => site.id == id);
+    final adress = await LocationHelper.getPlaceAddress(
+        pickedLocation.lattitude, pickedLocation.longitude);
+    if (siteIndex >= 0) {
+      final url = Uri.parse(
+          'https://example-89004-default-rtdb.firebaseio.com/sites/$id.json');
+      await http.put(url,
+          body: json.encode({
+            'title': newSite.title,
+            'description': newSite.description,
+            'history': newSite.history,
+            'loc_lat': pickedLocation.lattitude,
+            'loc_lng': pickedLocation.longitude,
+            'adress': adress,
+            'image': newSite.image,
+            'placeId': newSite.placeId,
+          }));
+      _items[siteIndex] = newSite;
+      notifyListeners();
+    } else {}
   }
 }

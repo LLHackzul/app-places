@@ -4,7 +4,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class Places with ChangeNotifier {
-  List<Place> _placesList = [];
+  List<Place> _placesList = [
+  ];
 
   List<Place> get places {
     return [..._placesList];
@@ -40,8 +41,8 @@ class Places with ChangeNotifier {
     }
   }
 
-  void addPlace(Place place) {
-    /*   final url = Uri.parse(
+  Future<void> addPlace(Place place) async {
+    final url = Uri.parse(
         'https://example-89004-default-rtdb.firebaseio.com/places.json');
     try {
       final response = await http.post(
@@ -51,51 +52,21 @@ class Places with ChangeNotifier {
           'description': place.description,
           'img': place.img,
         }),
-      ); */
+      );
 
-    final newPlace = Place(
-        id: DateTime.now().toString(),
-        title: place.title,
-        description: place.description,
-        img: place.img);
-    _placesList.add(newPlace);
-    notifyListeners();
-    /*  } catch (e) {
-      throw e;
-    } */
-  }
-
-  void updatePlace(String id, Place newPlace) async {
-    final placeIndex = _placesList.indexWhere((place) => place.id == id);
-    /*  if (placeIndex >= 0) {
-      final url = Uri.parse(
-          'https://example-89004-default-rtdb.firebaseio.com/places/$id.json'); */
-    /*   await http.patch(url,
-          body: json.encode({
-            'title': newPlace.title,
-            'description': newPlace.description,
-            'img': newPlace.img,
-          })); */
-    _placesList[placeIndex] = newPlace;
-    notifyListeners();
-    /* } */
-  }
-
-  void deletePlace(String id) {
-    /*   final url = Uri.parse(
-        'https://example-89004-default-rtdb.firebaseio.com/places/$id.json'); */
-    final existingPlaceIndex =
-        _placesList.indexWhere((place) => place.id == id);
-    /* Place? existingPlace = _placesList[existingPlaceIndex]; */
-    _placesList.removeAt(existingPlaceIndex);
-    notifyListeners();
-    /*   final response = await http.delete(url);
-    if (response.statusCode >= 400) {
-      _placesList.insert(existingPlaceIndex, existingPlace);
+      final newPlace = Place(
+          id: json.decode(response.body)['name'],
+          title: place.title,
+          description: place.description,
+          img: place.img);
+      _placesList.add(newPlace);
       notifyListeners();
-      throw HttpException('No se pudo eliminar el lugar');
+    } catch (e) {
+      print(e);
+      throw e;
     }
-
-    existingPlace = null; */
   }
+
+  
+
 }

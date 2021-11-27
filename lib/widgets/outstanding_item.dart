@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../screens/site_detail_screen.dart';
+import 'package:provider/provider.dart';
+import '../providers/site.dart';
+import '../providers/places_provider.dart';
 class OutstandingItem extends StatelessWidget {
-  const OutstandingItem({Key? key}) : super(key: key);
+  Site site;
+
+  OutstandingItem({Key? key,required this.site}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final place= Provider.of<Places>(context).findById(site.placeId);
     return InkWell(
       onTap: (){
          Navigator.of(context).pushNamed(SiteDetailScreen.routeName);
@@ -14,6 +20,8 @@ class OutstandingItem extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         elevation: 8,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.only(
@@ -21,11 +29,11 @@ class OutstandingItem extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {},
                 child:Container(
-                  height: 100,
+                  height: 200,
                   width: double.infinity,
                   child: FadeInImage(
                     placeholder: AssetImage('assets/img/placeholder.png'),
-                    image: NetworkImage('https://firebasestorage.googleapis.com/v0/b/example-89004.appspot.com/o/yaxha.jpg?alt=media&token=7c658869-8351-4f52-9962-a13e3db392c2'),
+                    image: NetworkImage(site.image),
                     fit: BoxFit.cover,
                   ),
                 ), 
@@ -34,55 +42,40 @@ class OutstandingItem extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(10),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   FittedBox(
                     child: Text(
-                      'Yaxhá',
+                      site.title,
                       style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Container(
-                    width: 80,
-                    child: FittedBox(
-                      child: RatingBar.builder(
-                        ignoreGestures: true,
-                        initialRating: 4.5,
-                        minRating: 1,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemBuilder: (context, _) => Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                        ),
-                        onRatingUpdate: (rating) {},
-                      ),
-                    ),
-                  ),
                   SizedBox(
-                    height: 2,
+                    height: 4,
                   ),
                   Text(
-                    'Tour completo por yaxha, no te lo puedes perder!',
+                    site.description,
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                     textAlign: TextAlign.justify,
                   ),
-                
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_pin,
-                        color: Colors.blue,
-                      ),
-                      Text(
-                        'Petén',
-                        style: TextStyle(color: Colors.blue, fontSize: 18),
-                      ),
-                    ],
+                  SizedBox(height: 15,),
+                  FittedBox(
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.location_pin,
+                          color: Colors.blue,
+                        ),
+                        Text(
+                          place.title,
+                          style: TextStyle(color: Colors.blue, fontSize: 18),
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),

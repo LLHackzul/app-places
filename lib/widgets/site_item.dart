@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../screens/site_detail_screen.dart';
-import '../models/site.dart';
+import '../providers/site.dart';
 class SiteItem extends StatelessWidget {
   final Site site;
   const SiteItem({Key? key,required this.site}) : super(key: key);
@@ -10,7 +10,7 @@ class SiteItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.of(context).pushNamed(SiteDetailScreen.routeName);
+        Navigator.of(context).pushNamed(SiteDetailScreen.routeName, arguments: site.id );
       },
       child: Container(
         height: 120,
@@ -50,7 +50,7 @@ class SiteItem extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Container(
+                      /* Container(
                         width: 80,
                         child: FittedBox(
                           child: RatingBar.builder(
@@ -67,7 +67,7 @@ class SiteItem extends StatelessWidget {
                             onRatingUpdate: (rating) {},
                           ),
                         ),
-                      ),
+                      ), */
                       Text(
                         site.description,
                         style: TextStyle(

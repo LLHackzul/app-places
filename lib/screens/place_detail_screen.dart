@@ -11,6 +11,7 @@ class PlaceDetailScreen extends StatefulWidget {
 }
 
 class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
+ 
   @override
   Widget build(BuildContext context) {
     final placeId = ModalRoute.of(context)!.settings.arguments as String;
@@ -26,7 +27,8 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-          
+              Row(
+                children: [
                   Text(
                     loadedPlace.title,
                     style: TextStyle(
@@ -34,7 +36,8 @@ class _PlaceDetailScreenState extends State<PlaceDetailScreen> {
                         fontSize: 35,
                         fontWeight: FontWeight.bold),
                   ),
-                 
+                ],
+              ),
               Text(
                 loadedPlace.description,
                 style: TextStyle(
